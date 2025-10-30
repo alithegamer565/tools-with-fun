@@ -1,0 +1,1 @@
+import dbConnect from '../../lib/db'; import Tool from '../../models/Tool'; export default async function handler(req,res){ await dbConnect(); const tools = await Tool.find({}).sort({createdAt:-1}).lean(); res.status(200).json({tools}) }

@@ -1,0 +1,5 @@
+// node seed.js (requires MONGODB_URI)
+const mongoose = require('mongoose');
+const dbConnect = require('./lib/db').default;
+const Tool = require('./models/Tool').default;
+async function run(){ await dbConnect(); await Tool.updateOne({slug:'age-calculator'},{slug:'age-calculator',title:'Age Calculator',category:'Calculators',description:'Calculate age from birthdate',html:`<label>Birthdate: <input type='date' id='bd'/></label><button onclick="(function(){let d=document.getElementById('bd').value; if(!d){alert('select date');return;} alert('Age: '+(new Date().getFullYear()-new Date(d).getFullYear()))})()">Calculate</button>`},{upsert:true}); await Tool.updateOne({slug:'word-counter'},{slug:'word-counter',title:'Word Counter',category:'Text Tools',description:'Counts words and characters',html:`<textarea id='ta' rows='6' style='width:100%'></textarea><button onclick="(function(){let t=document.getElementById('ta').value; let words=t.trim()?t.trim().split(/\s+/).length:0; alert('Words:'+words)})()">Count</button>`},{upsert:true}); console.log('seeded'); process.exit(0) } run().catch(e=>{console.error(e); process.exit(1) })
